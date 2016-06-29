@@ -635,12 +635,12 @@ done >> $JOBFILE
 
 
 # read random, set blocksize, vary # of  users
-function readrand {
+function randread {
 for i in 1 ; do
 cat << EOF
 [job$JOBNUMBER]
 rw=randread
-bs=8k
+bs=${WRITESIZE}k
 numjobs=1
 offset=$OFFSET
 EOF
@@ -657,7 +657,21 @@ bs=${WRITESIZE}k
 numjobs=1
 offset=$OFFSET
 sync=1
-direct=0
+direct=1
+EOF
+done >> $JOBFILE
+}
+
+function randwrite {
+for i in 1 ; do
+cat << EOF
+[job$JOBNUMBER]
+rw=randwrite
+bs=${WRITESIZE}k
+numjobs=1
+offset=$OFFSET
+sync=1
+direct=1
 EOF
 done >> $JOBFILE
 }
